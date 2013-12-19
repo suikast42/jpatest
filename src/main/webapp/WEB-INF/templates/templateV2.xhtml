@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+<h:head>
+    <title><ui:insert name="title"> #{controllerWmsManagement.title}  </ui:insert></title>
+
+    <h:outputStylesheet library="css" name="sms.css"/>
+    <!-- Show dialogs again if validation failed -->
+    <script type="text/javascript">
+        function handleComplete(widgetwar, xhr, status, args) {
+            if (args.validationFailed) {
+                widgetwar.hide();
+                widgetwar.show();
+            }
+            else {
+                widgetwar.hide();
+            }
+        }
+    </script>
+
+</h:head>
+
+<h:body>
+
+    <pe:layout id="mainlayout" fullPage="true">
+        <pe:layoutPane id="mainlayout-cotent" position="center" styleClassContent="content">
+            <pe:layout styleClass="content" id="nestedlayoutSettings" fullPage="false">
+                <pe:layoutPane position="center">
+                    <ui:insert name="body">Body</ui:insert>
+                </pe:layoutPane>
+            </pe:layout>
+        </pe:layoutPane>
+    </pe:layout>
+
+    <footer id="pageFooter">
+        <h:form id="formServerShutdownDetection">
+            <p:poll onerror="statusDialog.show();" interval="120"/>
+            <p:dialog appendTo="@(body)" modal="true" widgetVar="statusDialog" header="Error" resizable="false"
+                      draggable="true" closable="false">
+                <h:panelGroup layout="block" styleClass="ui-message-error ui-widget ui-corner-all">
+                    <h:outputText value="Can't reach the server !"/>
+                    <br/>
+                    <h:outputLink value="#{facesContext.externalContext.request.requestURI}"
+                                  onclick="window.location.reload(true)">
+                        <h:outputText value="Please click for reload the page"/>
+                    </h:outputLink>
+                </h:panelGroup>
+            </p:dialog>
+        </h:form>
+        <p:ajaxStatus styleClass="ajaxStatus">
+            <f:facet name="start">
+                <p:graphicImage value="/resources/images/loading.gif"/>
+            </f:facet>
+
+            <f:facet name="complete">
+                <h:outputText value=""/>
+            </f:facet>
+        </p:ajaxStatus>
+    </footer>
+</h:body>
+</html>

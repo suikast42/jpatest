@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.siemag.tests</groupId>
+    <artifactId>jpatest</artifactId>
+    <packaging>war</packaging>
+    <version>1.0.0-SNAPSHOT</version>
+    <name>jpatest</name>
+    <description>
+        Setup the test environment:
+        1. Add a db resource which is named TESTDB or change it in the persistence.xml
+        2. Adopt your DB provider in persistence.xml
+        3. Start your testserver with a protoffset of 10 or change the lookup port
+        com.siemag.jpatest.remoting.util.ServiceLocatorClientSide:85
+        4. Adopt the propety jboss.test.dir to your testserver
+        5. Adopt the property serverProfile for your runconfiguration
+    </description>
+    <!--<parent>-->
+    <!--<groupId>com.siemag.common</groupId>-->
+    <!--<artifactId>wms-master-bom</artifactId>-->
+    <!--<version>1.8.0-SNAPSHOT</version>-->
+    <!--<relativePath>../wms-master-bom/pom.xml</relativePath>-->
+    <!--</parent>-->
+
+    <properties>
+        <!--Path to your Jboss-->
+        <jboss.test.dir>${env.IDE_HOME}/jboss-as-7.2.0.Final-testenv</jboss.test.dir>
+        <arquillian-profile></arquillian-profile>
+        <serverProfile>standalone-full-WAN.xml</serverProfile>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>${project.build.sourceEncoding}</project.reporting.outputEncoding>
+
+        <version-hibernate-validator>4.2.0.Final</version-hibernate-validator>
+        <version-hibernate>4.1.4.Final</version-hibernate>
+        <version-junit>4.11</version-junit>
+        <version-harmcrest>1.3</version-harmcrest>
+        <version-jboss-javaee>2.0.0.Final</version-jboss-javaee>
+        <version-jboss>7.2.0.Final</version-jboss>
+        <version-primefaces>4.0.5</version-primefaces>
+        <version-apache-deltaspike>0.5</version-apache-deltaspike>
+        <version-primefaces-extensions>1.1.0</version-primefaces-extensions>
+        <version-primefaces-theme>1.0.10</version-primefaces-theme>
+        <version-primefaces-metro-theme>1.0</version-primefaces-metro-theme>
+        <version-atmosphere>2.0.0</version-atmosphere>
+        <version-arquillian>1.1.1.Final</version-arquillian>
+
+        <version-plugin-surefire>2.13</version-plugin-surefire>
+        <version-plugin-war>2.2</version-plugin-war>
+        <version-plugin-compiler>3.1</version-plugin-compiler>
+        <version-plugin-jar>2.4</version-plugin-jar>
+    </properties>
+    <build>
+        <pluginManagement>
+            <plugins>
+
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${version-plugin-compiler}</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>${version-plugin-jar}</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>${version-plugin-surefire}</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-war-plugin</artifactId>
+                    <version>${version-plugin-war}</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+        <plugins>
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <inherited>true</inherited>
+                <configuration>
+                    <runOrder>alphabetical</runOrder>
+                    <enableAssertions>true</enableAssertions>
+                    <failIfNoTests>false</failIfNoTests>
+                    <testFailureIgnore>true</testFailureIgnore>
+                    <useFile>false</useFile>
+
+                    <argLine>-Xms2048m -Xmx2048m -XX:MaxPermSize=256m -ea
+                        -Dfile.encoding=${project.build.sourceEncoding}
+                    </argLine>
+                    <systemPropertyVariables>
+                        <serverProfile>${serverProfile}</serverProfile>
+                        <arquillian.launch>${arquillian-profile}</arquillian.launch>
+                        <testServer>${jboss.test.dir}</testServer>
+                        <port.management>10009</port.management>
+                    </systemPropertyVariables>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.apache.maven.surefire</groupId>
+                        <artifactId>surefire-junit47</artifactId>
+                        <version>${version-plugin-surefire}</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <inherited>true</inherited>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                            <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <inherited>true</inherited>
+                <configuration>
+                    <warName>${artifactId}</warName>
+                    <archive>
+                        <manifest>
+                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                            <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+                        </manifest>
+                    </archive>
+                    <!-- Java EE 6 doesn't require web.xml, Maven needs to catch up! -->
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.jboss.arquillian</groupId>
+                <artifactId>arquillian-bom</artifactId>
+                <version>${version-arquillian}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+    <dependencies>
+        <dependency>
+            <groupId>apache</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>2.4</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>${version-hibernate}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>${version-hibernate-validator}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${version-junit}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.hamcrest</groupId>
+                    <artifactId>hamcrest-core</artifactId>
+                </exclusion>
+            </exclusions>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-all</artifactId>
+            <version>${version-harmcrest}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Provided dependencies from parent -->
+        <dependency>
+            <groupId>org.jboss.spec</groupId>
+            <artifactId>jboss-javaee-6.0</artifactId>
+            <version>${version-jboss-javaee}</version>
+            <type>pom</type>
+        </dependency>
+
+        <!-- Compile dependencies from parent ( everything here will be copied in WEB_INF/lib -->
+        <dependency>
+            <groupId>org.primefaces</groupId>
+            <artifactId>primefaces</artifactId>
+            <version>${version-primefaces}</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+            <version>1.2.1</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.primefaces.extensions</groupId>
+            <artifactId>primefaces-extensions</artifactId>
+            <version>${version-primefaces-extensions}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.primefaces.themes</groupId>
+            <artifactId>all-themes</artifactId>
+            <version>${version-primefaces-theme}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.primefaces.themes</groupId>
+            <artifactId>metroui</artifactId>
+            <version>${version-primefaces-metro-theme}</version>
+        </dependency>
+
+        <!-- Dependencies for pirme push -->
+        <dependency>
+            <groupId>org.atmosphere</groupId>
+            <artifactId>atmosphere-runtime</artifactId>
+            <exclusions>
+                <exclusion>
+                    <artifactId>slf4j-api</artifactId>
+                    <groupId>org.slf4j</groupId>
+                </exclusion>
+            </exclusions>
+            <version>${version-atmosphere}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>eu.infomas</groupId>
+            <artifactId>annotation-detector</artifactId>
+            <version>3.0.0</version>
+        </dependency>
+
+        <!-- Dependencies for seam to have transaction in JSF -->
+        <!-- Deltaspike Core -->
+        <dependency>
+            <groupId>org.apache.deltaspike.core</groupId>
+            <artifactId>deltaspike-core-api</artifactId>
+            <version>${version-apache-deltaspike}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.deltaspike.core</groupId>
+            <artifactId>deltaspike-core-impl</artifactId>
+            <version>${version-apache-deltaspike}</version>
+        </dependency>
+
+        <!-- JPA Module -->
+        <dependency>
+            <groupId>org.apache.deltaspike.modules</groupId>
+            <artifactId>deltaspike-jpa-module-api</artifactId>
+            <version>${version-apache-deltaspike}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.deltaspike.modules</groupId>
+            <artifactId>deltaspike-jpa-module-impl</artifactId>
+            <version>${version-apache-deltaspike}</version>
+        </dependency>
+
+        <!-- Arquillian compile dependendcies. For building test packaged with MavenDependencyResolver API -->
+
+
+        <dependency>
+            <groupId>org.jboss.shrinkwrap.resolver</groupId>
+            <artifactId>shrinkwrap-resolver-depchain</artifactId>
+            <scope>test</scope>
+            <type>pom</type>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.xalan</groupId>
+            <artifactId>serializer</artifactId>
+            <version>2.7.1-1.jbossorg</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jboss.arquillian.protocol</groupId>
+            <artifactId>arquillian-protocol-servlet</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jboss.arquillian.junit</groupId>
+            <artifactId>arquillian-junit-container</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jboss.as</groupId>
+            <artifactId>jboss-as-ejb-client-bom</artifactId>
+            <type>pom</type>
+            <scope>provided</scope>
+            <version>${version-jboss}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jboss.as</groupId>
+            <artifactId>jboss-as-jms-client-bom</artifactId>
+            <type>pom</type>
+            <scope>provided</scope>
+            <version>${version-jboss}</version>
+        </dependency>
+    </dependencies>
+
+
+    <profiles>
+        <profile>
+            <id>JBossRemote</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <properties>
+                <arquillian-profile>jboss7-remote</arquillian-profile>
+            </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>org.jboss.as</groupId>
+                    <artifactId>jboss-as-arquillian-container-remote</artifactId>
+                    <scope>test</scope>
+                    <version>${version-jboss}</version>
+                </dependency>
+
+            </dependencies>
+        </profile>
+        <profile>
+            <id>JBossManaged</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <arquillian-profile>jboss7-managed</arquillian-profile>
+            </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>org.jboss.as</groupId>
+                    <artifactId>jboss-as-arquillian-container-managed</artifactId>
+                    <scope>test</scope>
+                    <version>${version-jboss}</version>
+                </dependency>
+            </dependencies>
+        </profile>
+    </profiles>
+</project>

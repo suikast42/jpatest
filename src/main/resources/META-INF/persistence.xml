@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+ <persistence-unit name="TESTDB" >
+
+ 	<provider>org.hibernate.ejb.HibernatePersistence</provider>
+ 	<jta-data-source>java:/datasources/TESTDB</jta-data-source>
+ 	<!--
+ 		Be careful with that. If you change the base base version then you must change the version of this jar file too.
+ 		Consider this in createdrop-persistence.xml too.
+ 	-->
+ 	<shared-cache-mode>ENABLE_SELECTIVE</shared-cache-mode>
+  	<properties>
+  		<!-- For mapping the SQL dialect of the underlying  database -->
+  		<property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect"/>
+
+		<!-- Register a lookupname for the EntittymanagerFacotory -->
+ 		<property name="jboss.entity.manager.factory.jndi.name" value="java:/EntityManagerFactory"/>
+
+  		<property name="hibernate.show_sql" value="false"/>
+  		<property name="hibernate.format_sql" value="false"/>
+        <property name="hibernate.hbm2ddl.auto" value="update"/>
+
+		<!--
+		<property name="hibernate.hbm2ddl.auto" value="update"/>
+		<property name="hibernate.cache.infinispan.entity.eviction.strategy" value= "LRU"/>
+		<property name="hibernate.cache.infinispan.entity.eviction.wake_up_interval" value= "2000"/>
+		<property name="hibernate.cache.infinispan.entity.eviction.max_entries"  value= "5000"/>
+		<property name="hibernate.cache.infinispan.entity.expiration.lifespan"  value= "60000"/>
+		<property name="hibernate.cache.infinispan.entity.expiration.max_idle"  value= "30000"/>
+		<property name="hibernate.generate_statistics" value="true"/>
+		<property name="hibernate.cache.use_structured_entries" value="true"/>
+		<property name="hibernate.cache.region.factory_class" value="org.hibernate.cache.infinispan.JndiInfinispanRegionFactory" />
+		<property name="hibernate.cache.infinispan.cachemanager" value="java:jboss/infinispan/hibernate" />
+		<property name="hibernate.cache.provider_class" value="org.hibernate.cache.EhCacheProvider"/>
+     	<property name="hibernate.transaction.manager_lookup_class" value="org.hibernate.transaction.JBossTransactionManagerLookup"/>
+  		<property name="hibernate.transaction.factory_class" value="org.hibernate.transaction.JTATransactionFactory"/>
+		<property name="hibernate.cache.region.factory_class" value="org.jboss.as.jpa.hibernate4.infinispan.InfinispanRegionFactory"/>
+		<property name="hibernate.hbm2ddl.auto" value="update"/>
+		-->
+	</properties>
+ </persistence-unit>
+
+</persistence>
+<!--
+<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+ <persistence-unit name="WMS" transaction-type="JTA">
+  <provider>org.hibernate.ejb.HibernatePersistence</provider>
+  	<jta-data-source>java:comp/env/jdbc/WMSDS</jta-data-source>
+  	<properties>
+
+  		"JNDI Name für das EntityManagerFactory"
+  		<property name="jboss.entity.manager.factory.jndi.name" value="java:/EntityManagerFactory"/>
+
+  		"JNDI name des Entitymanagers"
+  	  	<property name="jboss.entity.manager.jndi.name" value="java:/hibernate/EntityManager"/>
+
+  	  	"JNDI name der SessionFactory"
+  	  	<property name="hibernate.session_factory_name" value="java:/hibernate/SessionFactory"/>
+
+  	  	"
+  	  		Diese Property muss eingebunden werden wenn der Entitymaganer über Persistence.createEntityManagerFactory("WMSDS")
+  	  		Eingebunden werden soll. Das veranlasst, dass der Entitymaganer im EXTENDED Mode eingebunden wird.
+  	  	"
+  		<property name="hibernate.transaction.manager_lookup_class" value="org.hibernate.transaction.JBossTransactionManagerLookup"/>
+  		<property name="hibernate.transaction.factory_class" value="org.hibernate.transaction.JTATransactionFactory"/>
+
+		<property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect"/>
+
+		<property name="hibernate.showSqlEnabled" value="true"/>
+		<property name="hibernate.format_sql" value="true"/>
+
+		<property name="hibernate.ejb.interceptor" value="com.siemag.components.server.updating.DomainInterceptor"/>
+
+		<property name="hibernate.ejb.cfgfile" value="hibernate.cfg.xml"/>
+		<property name="jta.UserTransaction" value="java:comp/UserTransaction" />
+
+		<property name="hibernate.transaction.flush_before_completion" value="true"/>
+  		<property name="hibernate.transaction.auto_close_session" value="true"/>
+  		 <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
+
+  		"Envers properties"
+  		<property name="hibernate.listeners.envers.autoRegister" value="false"/>
+  		<property name="org.hibernate.envers.audit_strategy" value="org.hibernate.envers.strategy.ValidityAuditStrategy"/>
+ 		<property name="org.hibernate.envers.audit_strategy_validity_store_revend_timestamp" value="true"/>
+
+	</properties>
+ </persistence-unit>
+
+</persistence>
+ -->

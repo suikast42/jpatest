@@ -1,0 +1,366 @@
+/*
+Design by Free CSS Templates
+http://www.freecsstemplates.org
+Released for free under a Creative Commons Attribution 2.5 License
+*/
+
+/**
+Layouting Begin
+*/
+body {
+    font-size: 12px;
+    background: white;
+    color: #616161;
+}
+
+#pagewrapper {
+    min-width: 320px;
+    /**max-width: 1140px;*/
+    width: 90%;
+    margin: 0 auto;
+}
+
+#pageHeader {
+    height: 20%;
+}
+
+.pageHeader-logo {
+    float: left;
+    width: 18%;
+}
+
+.pageHeader-messages {
+    float: left;
+    width: 67%;
+}
+
+/** Username and logout link */
+.pageHeader-userinfo {
+    float: right;
+    width: 15%;
+}
+
+.pageHeader-messages-content {
+    height: 100px;
+    border: 0px;
+}
+
+/** Page content*/
+.content {
+    height: 100%;
+    margin-left: 5px;
+    margin-right: 10px;
+}
+
+
+/** Menue */
+#pageFooter {
+    height: 15%;
+    clear: both;
+}
+
+/** Ajax status icon to bottom */
+.ajaxStatus {
+    position: fixed;
+    bottom: 50px;
+}
+
+.blockScreenDialogText {
+    font-size: x-large;
+    font-style: italic;
+    color: black;
+}
+
+.centerlogin {
+    position: absolute;
+    top: 30%;
+    left: 40%;
+    font-size: large;
+    color: inherit;
+}
+
+.centerlogin a {
+    color: red;
+}
+
+.centerlogin a:VISITED {
+    color: red;
+}
+
+#propertiesMenue {
+    float: left;
+    width: 15%;
+}
+
+#propertiesContent {
+    float: right;
+    margin-left: 1%;
+    width: 84%;
+}
+
+/** Ajax Errorhandler */
+#ajaxErrorHandlerDialog_modal {
+    background: #f60;
+}
+
+.ajaxErrorHandlerTtitle {
+    color: yellow;
+}
+
+.ajaxErrorHandlerBody {
+    overflow: auto;
+    height: 300px;
+    width: 700px;
+}
+
+/**
+Layouting End
+*/
+
+/** Primefaces watermark workarroung begin */
+/** styles for chrome and safari */
+
+.ui-fieldset .ui-fieldset-legend{
+    margin: 0 auto;
+    background: inherit;
+    color: #3399FF;
+    border: none;
+    text-align: center ;
+    font-size: large;
+    font-style:italic;
+
+}
+::-webkit-input-placeholder {
+    color: #212121 !important;
+    font-family: cursive;
+! important;
+    font-style: italic !important;
+    opacity: 0.5 !important;
+}
+
+/** styles for firefox */
+:-moz-placeholder {
+    color: #212121 !important;
+    font-family: cursive;
+! important;
+    font-style: italic !important;
+    opacity: 0.5 !important;
+}
+
+/** styles for internet explorer */
+.ui-watermark {
+    color: #212121 !important;
+    font-family: cursive;
+! important;
+    font-style: italic !important;
+    opacity: 0.5 !important;
+}
+
+/** Primefaces watermark workarround end */
+
+/** Controller states */
+.running {
+    /* green*/
+    color: #006600 !important;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+.pending {
+    /* Orange*/
+    color: #FF6600 !important;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+.stoped {
+    /* darkgray*/
+    color: #6E6E6E !important;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+.failed {
+    /* red*/
+    color: #FF0000 !important;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+.notstarted {
+    /* red*/
+    color: fuchsia !important;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+.unkown {
+    /* red*/
+    color: olive;
+! important;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+/** WMS Service states Begin */
+.ui-panel-services-started {
+
+}
+
+.ui-panel-services-started .ui-panel-titlebar {
+    color: green;
+    font-size: large;
+}
+
+.ui-panel-services-stoped {
+
+}
+
+.ui-panel-services-stoped .ui-panel-titlebar {
+    color: gray;
+    font-size: large;
+}
+
+.ui-panel-services-failure {
+
+}
+
+.ui-panel-services-failure .ui-panel-titlebar {
+    color: red;
+    font-size: large;
+}
+
+.ui-panel-services-progress {
+
+}
+
+.ui-panel-services-progress .ui-panel-titlebar {
+    color: orange;
+    font-size: large;
+}
+
+/** WMS Service states End */
+/** Primfaces theme changes */
+h1, h2, h3 {
+    margin-top: 0;
+}
+
+h1 {
+    font-size: 1.6em;
+    font-weight: normal;
+}
+
+h2 {
+    font-size: 1.6em;
+}
+
+h3 {
+    font-size: 1em;
+    margin-top: 20px;
+}
+
+.ui-panelgrid tr, .ui-panelgrid td {
+    border: 0 !important;
+}
+
+.ui-datatable-even {
+    background: #F8EEB4;
+}
+
+.ui-datatable-odd {
+    background: #FFFFFF;
+}
+
+#s {
+    margin: 10px 0px 0 15px;
+    padding: 2px 2px;
+    width: 180px;
+    height: 18px;
+    border: 1px solid #6F6E6E;
+    background: #FFFFFF;
+    font-size: 10px;
+    color: #000000;
+}
+
+.ui-widget {
+    font-family: inherit;
+    font-size: 1.1em;
+}
+
+.ui-widget-content {
+    color: inherit;
+}
+
+#x {
+    margin: 0;
+    padding: 2px 5px;
+    height: 25px;
+    background: #CA8186;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10px;
+    color: #CCCCCC;
+}
+
+/**
+* Permissions layouting BEGIN
+*/
+
+.permissions {
+    width: 60%;
+    float: left;
+}
+
+.roles {
+    width: 20%;
+    float: left;
+}
+
+.grants {
+    width: 20%;
+    float: left;
+}
+
+/**
+* Permissions layouting END
+*/
+
+/**
+* User settings Datable and user props BEGIN
+*/
+
+
+
+.userPropsColumn1 {
+    /*width: 60%;*/
+}
+
+.userPropsColumn2 {
+    /*width: 30%;*/
+    float: right;
+
+}
+
+
+
+/**
+* User settings Datable and user props END
+*/
+
+/**
+* Allow overflow for submenus for p:menubar in north pane BEGIN
+*/
+.ui-layout-north {
+    z-index: 20 !important;
+    overflow: visible !important;;
+
+}
+
+.ui-layout-north .ui-layout-unit-content {
+    overflow: visible !important;
+}
+
+/**
+* Allow overflow for submenus for p:menubar in north pane END
+*/

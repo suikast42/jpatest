@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+                      http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	version="3.0">
+	<!-- Register Faces Servlet for *.xhtml -->
+	<servlet>
+		<servlet-name>Faces Servlet</servlet-name>
+		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Faces Servlet</servlet-name>
+		<url-pattern>*.xhtml</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>Faces Servlet</servlet-name>
+		<url-pattern>/faces/*</url-pattern>
+	</servlet-mapping>
+
+	<welcome-file-list>
+		<welcome-file>faces/index.xhtml</welcome-file>
+	</welcome-file-list>
+
+	<!-- Date Converter use system time zone instead of UTC -->
+	<context-param>
+		<param-name>javax.faces.DATETIMECONVERTER_DEFAULT_TIMEZONE_IS_SYSTEM_TIMEZONE</param-name>
+		<param-value>true</param-value>
+	</context-param>
+
+	<!-- Do not send XML comments to the client -->
+	<context-param>
+		<param-name>javax.faces.FACELETS_SKIP_COMMENTS</param-name>
+		<param-value>true</param-value>
+	</context-param>
+
+	<!-- Process zero-length input strings as null values -->
+	<context-param>
+		<param-name>javax.faces.INTERPRET_EMPTY_STRING_SUBMITTED_VALUES_AS_NULL</param-name>
+		<param-value>true</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>javax.faces.VALIDATE_EMPTY_FIELDS</param-name>
+		<param-value>true</param-value>
+	</context-param>
+	<!-- Use development mode -->
+	
+	<context-param>
+		<param-name>javax.faces.PROJECT_STAGE</param-name>
+		<param-value>Development</param-value>
+	</context-param>
+	<context-param>
+		<param-name>facelets.DEVELOPMENT</param-name>
+		<param-value>true</param-value>
+	</context-param>
+
+	<!-- Pretty faces (need only because of seam) -->
+	<context-param>
+		<param-name>com.ocpsoft.pretty.BASE_PACKAGES</param-name>
+		<param-value>none</param-value>
+	</context-param>
+
+
+
+
+	<!-- PrimeFaces Theme -->
+	<context-param>
+		<param-name>primefaces.THEME</param-name>
+		<param-value>metroui</param-value>
+	</context-param>
+
+
+	<!-- Prime Push configuration. We need some additional settings for because Jboss not supports websockets -->
+	<servlet>
+		<servlet-name>Push Servlet</servlet-name>
+		<servlet-class>org.primefaces.push.PushServlet</servlet-class>
+		<!-- Don't use websockets JBoss doesn't support it -->
+		<init-param>
+			<param-name>org.atmosphere.useWebSocket</param-name>
+			<param-value>false</param-value>
+		</init-param>
+		<!-- Use native protocol instead of websockets -->
+		<init-param>
+			<param-name>org.atmosphere.useNative</param-name>
+			<param-value>true</param-value>
+		</init-param>
+		<init-param>
+			<param-name>org.atmosphere.cpr.sessionSupport</param-name>
+			<param-value>false</param-value>
+		</init-param>
+		<init-param>
+			<param-name>org.atmosphere.resumeOnBroadcast</param-name>
+			<param-value>false</param-value>
+		</init-param>
+		<init-param>
+			<param-name>org.atmosphere.cpr.broadcasterCacheClass</param-name>
+			<param-value>org.atmosphere.cache.UUIDBroadcasterCache</param-value>
+		</init-param>
+		<init-param>
+			<param-name>org.atmosphere.websocket.maxIdleTime</param-name>
+			<param-value>600000</param-value>
+		</init-param>
+		
+		<load-on-startup>1</load-on-startup>
+		<async-supported>true</async-supported>
+
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Push Servlet</servlet-name>
+		<url-pattern>/primepush/*</url-pattern>
+	</servlet-mapping>
+	<context-param>
+		<param-name>primefaces.PUSH_SERVER_URL</param-name>
+		<param-value>http://localhost:8080</param-value>
+	</context-param>
+	<!-- Primefaces FileUpload filter -->
+	<filter>
+		<filter-name>PrimeFaces FileUpload Filter</filter-name>
+		<filter-class>org.primefaces.webapp.filter.FileUploadFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>PrimeFaces FileUpload Filter</filter-name>
+		<servlet-name>Faces Servlet</servlet-name>
+	</filter-mapping>
+	<!-- Primefaces Exceptions options -->
+	<context-param>
+		<param-name>org.primefaces.extensions.DELIVER_UNCOMPRESSED_RESOURCES</param-name>
+		<!-- Default is true -->
+		<param-value>false</param-value>
+	</context-param>
+	<context-param>
+		<param-name>org.primefaces.extensions.WRAP_PRIME_FACES_RESOURCES</param-name>
+		<!-- Default is false -->
+		<param-value>false</param-value>
+	</context-param>
+	
+	
+</web-app>
+
